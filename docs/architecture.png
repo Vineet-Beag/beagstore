@@ -1,0 +1,26 @@
+User
+  │
+  ▼
+Streamlit UI
+  │
+  ▼
+FastAPI RAG API
+  │
+  ├── SentenceTransformer
+  ├── PostgreSQL + pgvector
+  └── Ollama Mistral
+
+PDF Upload
+  │
+  ▼
+Chunking + Embeddings
+  │
+  ▼
+Vector Store
+
+Prometheus
+  │
+  ▼
+Grafana Dashboards
+
+Kubernetes (K3s on OCI VM)

@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rag-api
+  namespace: observability
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: rag-api
+
+  template:
+    metadata:
+      labels:
+        app: rag-api
+
+    spec:
+      containers:
+      - name: rag-api
+        image: docker.io/library/rag-api:1.0
+
+        imagePullPolicy: Never
+
+        ports:
+        - containerPort: 8000
+
+        env:
+        - name: DB_HOST
+          value: "postgres-postgresql"
+
+        - name: DB_NAME
+          value: "postgres"
+
+        - name: DB_USER
+          value: "postgres"
+
+        - name: DB_PASSWORD
+          value: "postgres"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rag-api
+  namespace: observability
+
+spec:
+  selector:
+    app: rag-api
+
+  ports:
+  - port: 8000
+    targetPort: 8000
+
+  type: ClusterIP

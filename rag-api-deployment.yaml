@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rag-api
+  namespace: observability
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: rag-api
+
+  template:
+    metadata:
+      labels:
+        app: rag-api
+
+    spec:
+      containers:
+      - name: rag-api
+        image: rag-api:1.0
+        imagePullPolicy: Never
+
+        ports:
+         - containerPort: 8000
+           name: http
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rag-api
+  namespace: observability
+
+spec:
+  selector:
+    app: rag-api
+
+  ports:
+  - port: 8000
+    targetPort: 8000
